@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>carrot 랜딩</title>
+  <meta name="description" content="carrot 랜딩 기본 뼈대" />
+
+  <link rel="stylesheet" href="./css/style.css" />
+</head>
+<body>
+  <!-- 상단 앱바(뒤로가기 + 타이틀 느낌) -->
+  <header class="appbar">
+    <button class="back-btn" type="button" aria-label="뒤로가기">
+      <span aria-hidden="true">‹</span>
+    </button>
+    <h1 class="appbar-title">carrot</h1>
+  </header>
+
+  <main>
+    <!-- HERO -->
+    <section class="hero" aria-label="상단 소개">
+      <div class="hero-media" role="img" aria-label="상단 이미지 자리">
+        <!-- 지금은 이미지가 없으니 placeholder만 표시 -->
+        <div class="media-placeholder">
+          <div class="media-badge">IMAGE</div>
+          <p class="media-hint">assets/images/hero/ 에 이미지 넣을 예정</p>
+        </div>
+      </div>
+
+      <div class="hero-copy">
+        <p class="hero-kicker">24시 프리미엄 셀프 카페</p>
+        <h2 class="hero-title">24시간 무인카페</h2>
+        <p class="hero-subtitle">정품 캡슐 단독 채택 · 24시간 제공</p>
+
+        <div class="hero-cta">
+          <button class="btn btn-primary" id="ctaTop" type="button">신청하기</button>
+          <p class="hero-meta">
+            <span class="meta-dot" aria-hidden="true"></span>
+            <span>188명이 신청 완료했어요</span>
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- FEATURES (1~5 리스트) -->
+    <section class="features" aria-label="핵심 혜택">
+      <div class="card">
+        <ol class="feature-list">
+          <li class="feature-item">
+            <div class="num-badge">1</div>
+            <div class="feature-text">
+              <h3 class="feature-title">가맹비 0원! 24시간 운영 무인카페</h3>
+              <p class="feature-desc">초기 비용 최소화 · 자판기 렌탈만으로도 창업 가능!</p>
+            </div>
+          </li>
+
+          <li class="feature-item">
+            <div class="num-badge">2</div>
+            <div class="feature-text">
+              <h3 class="feature-title">렌탈/최장 48개월 분납 지원</h3>
+              <p class="feature-desc">일시불 · 분납 · 월 렌탈 선택 가능</p>
+            </div>
+          </li>
+
+          <li class="feature-item">
+            <div class="num-badge">3</div>
+            <div class="feature-text">
+              <h3 class="feature-title">정품 캡슐 사용 / 고수익</h3>
+              <p class="feature-desc">브랜드 커피를 24시간 제공</p>
+            </div>
+          </li>
+
+          <li class="feature-item">
+            <div class="num-badge">4</div>
+            <div class="feature-text">
+              <h3 class="feature-title">일반 소모품 지원 (1회)</h3>
+              <p class="feature-desc">아이스컵, HOT컵, 뚜껑, 컵홀더 각 1,000개</p>
+            </div>
+          </li>
+
+          <li class="feature-item">
+            <div class="num-badge">5</div>
+            <div class="feature-text">
+              <h3 class="feature-title">약 100만원 상당 무상지원</h3>
+              <p class="feature-desc">스트로우, 커피스틱, 시럽펌프 등</p>
+            </div>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- APPLY (버튼 스크롤 대상) -->
+    <section class="apply" id="apply" aria-label="신청">
+      <div class="apply-card">
+        <h2 class="apply-title">신청하기</h2>
+        <p class="apply-desc">지금은 뼈대만. 폼/입력 UI는 다음 단계에서 붙입니다.</p>
+
+        <div class="apply-actions">
+          <button class="btn btn-primary btn-wide" id="ctaBottom" type="button">신청하기</button>
+        </div>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <p class="footer-text">© carrot landing. All rights reserved.</p>
+    </footer>
+  </main>
+
+  <script src="./js/main.js"></script>
+</body>
+</html>
