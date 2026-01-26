@@ -3,13 +3,12 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>carrot 랜딩</title>
+  <title>carrot</title>
   <meta name="description" content="carrot 랜딩 기본 뼈대" />
-
   <link rel="stylesheet" href="./css/style.css" />
 </head>
 <body>
-  <!-- 상단 앱바(뒤로가기 + 타이틀 느낌) -->
+  <!-- 상단 앱바 -->
   <header class="appbar">
     <button class="back-btn" type="button" aria-label="뒤로가기">
       <span aria-hidden="true">‹</span>
@@ -20,28 +19,38 @@
   <main>
     <!-- HERO -->
     <section class="hero" aria-label="상단 소개">
-      <div class="hero-media" role="img" aria-label="상단 이미지 자리">
-        <!-- 지금은 이미지가 없으니 placeholder만 표시 -->
-        <div class="media-placeholder">
-          <div class="media-badge">IMAGE</div>
-          <p class="media-hint">assets/images/hero/ 에 이미지 넣을 예정</p>
-        </div>
-      </div>
+  <div class="hero-media hero-slider" aria-label="상단 이미지 슬라이드">
+    <!-- 로고(선택) -->
+    <div class="hero-logo">
+      <img src="assets/images/icons/logo.png" alt="carrot logo" />
+    </div>
 
-      <div class="hero-copy">
-        <p class="hero-kicker">24시 프리미엄 셀프 카페</p>
-        <h2 class="hero-title">24시간 무인카페</h2>
-        <p class="hero-subtitle">정품 캡슐 단독 채택 · 24시간 제공</p>
-
-        <div class="hero-cta">
-          <button class="btn btn-primary" id="ctaTop" type="button">신청하기</button>
-          <p class="hero-meta">
-            <span class="meta-dot" aria-hidden="true"></span>
-            <span>188명이 신청 완료했어요</span>
-          </p>
-        </div>
+    <!-- 슬라이드 -->
+    <div class="slides" id="heroSlides">
+      <div class="slide is-active">
+        <img src="assets/images/hero/001.jpg" alt="히어로 이미지 1" />
       </div>
-    </section>
+      <div class="slide">
+        <img src="assets/images/hero/002.jpg" alt="히어로 이미지 2" />
+      </div>
+      <div class="slide">
+        <img src="assets/images/hero/003.jpg" alt="히어로 이미지 3" />
+      </div>
+    </div>
+
+    <!-- 컨트롤 -->
+    <button class="nav prev" type="button" aria-label="이전 이미지" id="heroPrev">‹</button>
+    <button class="nav next" type="button" aria-label="다음 이미지" id="heroNext">›</button>
+
+    <div class="dots" id="heroDots" aria-label="슬라이드 표시"></div>
+  </div>
+
+  <!-- 기존 hero-copy는 그대로 두면 됨 -->
+  <div class="hero-copy">
+    ...
+  </div>
+</section>
+
 
     <!-- FEATURES (1~5 리스트) -->
     <section class="features" aria-label="핵심 혜택">
