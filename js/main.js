@@ -22,8 +22,6 @@ function bindBackButton() {
 
   back.addEventListener("click", () => {
     console.log("[carrot] back clicked");
-    // 웹 랜딩에서는 history.back()이 의도와 다를 수 있어.
-    // 필요하면 location.href = "/" 같은 방식으로 바꿔도 됨.
     history.back();
   });
 }
@@ -35,6 +33,7 @@ function bindBackButton() {
  *   #heroSlides .slide (여러개)
  *   #heroDots (도트 컨테이너)
  *   #heroPrev, #heroNext (이전/다음 버튼)
+ *   #heroCounter (우측 하단 카운터: "1 / N")
  */
 function initHeroSlider() {
   const slidesWrap = document.getElementById("heroSlides");
@@ -43,6 +42,7 @@ function initHeroSlider() {
   const dotsWrap = document.getElementById("heroDots");
   const prevBtn = document.getElementById("heroPrev");
   const nextBtn = document.getElementById("heroNext");
+  const counter = document.getElementById("heroCounter");
 
   if (!slides.length) {
     console.warn("[carrot] hero slider: no slides found (#heroSlides .slide)");
@@ -71,6 +71,11 @@ function initHeroSlider() {
   function render() {
     slides.forEach((s, i) => s.classList.toggle("is-active", i === idx));
     dots.forEach((d, i) => d.classList.toggle("is-active", i === idx));
+
+    // 카운터 표시: 1 / N
+    if (counter) {
+      counter.textContent = `${idx + 1} / ${slides.length}`;
+    }
   }
 
   function go(n) {
