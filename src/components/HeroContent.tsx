@@ -9,15 +9,17 @@ export default function HeroContent() {
   useEffect(() => {
     const fetchCount = async () => {
       try {
-        const response = await fetch("/api/lead/count");
-        const data = (await response.json()) as { ok: boolean; count?: number };
+        const response = await fetch("/api/lead/count", { cache: "no-store" });
+        const data = (await response.json()) as { ok: boolean; count?: number; error?: string };
 
         if (data.ok && typeof data.count === "number") {
           setCount(data.count);
         } else {
+          console.error("[Lead Count]", data.error ?? "unknown error");
           setCount(0);
         }
       } catch (error) {
+        console.error("[Lead Count] Fetch failed:", error);
         setCount(0);
       } finally {
         setIsLoading(false);

@@ -73,7 +73,7 @@ export default function LeadPage() {
   };
 
   return (
-    <main className="mx-auto min-h-screen max-w-xl bg-white px-4 py-8 pb-24">
+    <main className="mx-auto max-w-xl bg-white px-4 pt-8 pb-12">
       <h1 className="text-2xl font-extrabold text-slate-900">창업 문의</h1>
       <p className="mt-2 text-sm text-slate-600">
         간단한 정보를 남겨주시면 전담 매니저가 빠르게 연락드립니다.
