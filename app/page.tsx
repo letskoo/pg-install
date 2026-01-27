@@ -8,7 +8,7 @@ import StickyTopBar from "@/components/StickyTopBar";
 
 export default function Page() {
   return (
-    <main className="min-h-screen bg-white pb-24">
+    <main className="min-h-screen bg-white pb-12">
       <div id="hero-sentinel" className="absolute top-0 left-0 w-full h-px pointer-events-none" />
       <StickyTopBar />
       <HeroSlider />
