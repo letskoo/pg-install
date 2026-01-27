@@ -1,40 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
-
 export default function HeroContent() {
-  const [count, setCount] = useState<number | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    const fetchCount = async () => {
-      try {
-        const response = await fetch("/api/lead/count", { cache: "no-store" });
-        const data = (await response.json()) as { ok: boolean; count?: number; error?: string };
-
-        if (data.ok && typeof data.count === "number") {
-          setCount(data.count);
-        } else {
-          console.error("[Lead Count]", data.error ?? "unknown error");
-          setCount(0);
-        }
-      } catch (error) {
-        console.error("[Lead Count] Fetch failed:", error);
-        setCount(0);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    fetchCount();
-
-    const interval = setInterval(fetchCount, 10000);
-
-    return () => clearInterval(interval);
-  }, []);
-
-  const displayText = isLoading ? "불러오는 중..." : `${count}명이 신청 완료했어요`;
-
   return (
     <div className="px-4 pt-2 pb-5">
       <h1 className="text-[22px] font-bold text-gray-900 mb-2 leading-snug">
@@ -47,7 +13,7 @@ export default function HeroContent() {
         <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
           <path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/>
         </svg>
-        <span className="font-semibold">{displayText}</span>
+        <span className="font-semibold">전국 가맹점이 신청 중입니다</span>
       </div>
     </div>
   );

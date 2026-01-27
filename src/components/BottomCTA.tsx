@@ -1,12 +1,6 @@
 "use client";
 
-import { useCallback } from "react";
-
 export default function BottomCTA() {
-  const handleClick = useCallback(() => {
-    window.open("/lead", "_blank", "noopener,noreferrer");
-  }, []);
-
   return (
     <div
       className="fixed bottom-0 left-0 right-0 z-50 bg-white border-t border-gray-200"
@@ -15,13 +9,12 @@ export default function BottomCTA() {
       <div className="px-5 py-2">
         <button
           type="button"
-          onClick={handleClick}
-          className="w-full h-12 flex items-center justify-center rounded-xl bg-[#ff7a00] text-base font-bold text-white"
+          disabled
+          className="w-full h-12 flex items-center justify-center rounded-xl bg-[#ff7a00] text-base font-bold text-white cursor-not-allowed opacity-60"
         >
           신청하기
         </button>
       </div>
     </div>
-
   );
 }
