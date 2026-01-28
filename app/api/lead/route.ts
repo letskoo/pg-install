@@ -1,9 +1,9 @@
 ﻿import { NextResponse } from "next/server";
 import { sendLeadNotificationEmail } from "@/lib/sendEmail";
 
-// 선택적 기능 플래그
+// 선택적 기능 플래그 (환경변수 기반)
 const ENABLE_LOCAL_RECORDS = false; // 로컬 저장 비활성화 (우선순위 낮음)
-const ENABLE_EMAIL_NOTIFICATIONS = true; // 이메일 발송 활성화
+const ENABLE_EMAIL_NOTIFICATIONS = process.env.ENABLE_EMAIL_NOTIFICATIONS !== "false"; // 이메일 발송 활성화 (기본: true, 환경변수로 제어)
 
 // Helper to safely log environment variable status
 function logEnvStatus(varName: string) {

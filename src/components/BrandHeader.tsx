@@ -4,8 +4,8 @@ import Image from "next/image";
 
 export default function BrandHeader() {
   return (
-    <div className="px-4 pt-5 pb-3">
-      <div className="max-w-[640px] mx-auto flex items-center gap-2">
+    <div className="pt-5 pb-3">
+      <div className="flex items-center gap-2">
       <div className="relative w-6 h-6 rounded-full overflow-hidden flex-shrink-0 lg:w-8 lg:h-8">
         <Image
           src="/images/icons/logo.jpg"

@@ -19,9 +19,11 @@ export default function HeroSlider() {
   const [isDragging, setIsDragging] = useState(false);
   const [isAnimating, setIsAnimating] = useState(false);
   const [showModal, setShowModal] = useState(false);
+  const [modalIndex, setModalIndex] = useState(1);
   const containerRef = useRef<HTMLDivElement | null>(null);
   const startXRef = useRef(0);
   const widthRef = useRef(1);
+  const modalStartXRef = useRef(0);
 
   const total = slides.length;
   const renderSlides = [slides[total - 1], ...slides, slides[0]];
@@ -108,6 +110,52 @@ export default function HeroSlider() {
   const handleImageClick = () => {
     if (!isDragging) {
       setShowModal(true);
+      setModalIndex(index);
+    }
+  };
+
+  const handleModalPrev = () => {
+    setModalIndex((prev) => (prev - 1 - 1 + total) % total + 1);
+  };
+
+  const handleModalNext = () => {
+    setModalIndex((prev) => (prev % total) + 1);
+  };
+
+  // 모달 키보드 이벤트
+  useEffect(() => {
+    if (!showModal) return;
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "ArrowLeft") {
+        handleModalPrev();
+      } else if (e.key === "ArrowRight") {
+        handleModalNext();
+      } else if (e.key === "Escape") {
+        setShowModal(false);
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [showModal, modalIndex, total]);
+
+  // 모달 스와이프 이벤트
+  const handleModalTouchStart = (e: React.TouchEvent<HTMLDivElement>) => {
+    modalStartXRef.current = e.touches[0].clientX;
+  };
+
+  const handleModalTouchEnd = (e: React.TouchEvent<HTMLDivElement>) => {
+    const endX = e.changedTouches[0].clientX;
+    const delta = endX - modalStartXRef.current;
+    const threshold = 50;
+
+    if (Math.abs(delta) >= threshold) {
+      if (delta > 0) {
+        handleModalPrev();
+      } else {
+        handleModalNext();
+      }
     }
   };
 
@@ -201,13 +249,69 @@ export default function HeroSlider() {
           <div 
             className="relative flex items-center justify-center overflow-hidden"
             onClick={(e) => e.stopPropagation()}
+            onTouchStart={handleModalTouchStart}
+            onTouchEnd={handleModalTouchEnd}
             style={{ maxWidth: "100vw", maxHeight: "100vh" }}
           >
+            {/* 좌 버튼 */}
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                handleModalPrev();
+              }}
+              className="absolute left-4 top-1/2 -translate-y-1/2 z-[10001] flex items-center justify-center w-12 h-12 bg-black/45 rounded-full hover:bg-black/60 active:bg-black/70 transition-colors shadow-lg"
+              aria-label="이전"
+            >
+              <svg
+                className="w-7 h-7 text-white"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M15 19l-7-7 7-7"
+                />
+              </svg>
+            </button>
+
+            {/* 이미지 */}
             <img
-              src={renderSlides[index].src}
-              alt={renderSlides[index].alt}
+              src={slides[modalIndex - 1].src}
+              alt={slides[modalIndex - 1].alt}
               style={{ maxWidth: "100vw", maxHeight: "100vh", objectFit: "contain" }}
             />
+
+            {/* 우 버튼 */}
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                handleModalNext();
+              }}
+              className="absolute right-4 top-1/2 -translate-y-1/2 z-[10001] flex items-center justify-center w-12 h-12 bg-black/45 rounded-full hover:bg-black/60 active:bg-black/70 transition-colors shadow-lg"
+              aria-label="다음"
+            >
+              <svg
+                className="w-7 h-7 text-white"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M9 5l7 7-7 7"
+                />
+              </svg>
+            </button>
+
+            {/* 인디케이터 */}
+            <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 rounded-full bg-black/55 px-3 py-1 text-xs font-semibold text-white backdrop-blur">
+              {modalIndex} / {slides.length}
+            </div>
           </div>
         </div>
       )}

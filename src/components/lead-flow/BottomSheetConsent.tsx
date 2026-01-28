@@ -97,7 +97,7 @@ export default function BottomSheetConsent({
           <div className="px-4 py-4 space-y-4">
             <div className="max-w-[640px] mx-auto">
             {/* 모두 동의 */}
-            <div className="border-b border-gray-200 pb-4">
+            <div className="border-b border-gray-200 pb-4 pl-6">
               <label className="flex items-center gap-3 cursor-pointer select-none">
                 <input
                   type="checkbox"
@@ -128,8 +128,8 @@ export default function BottomSheetConsent({
             </div>
 
             {/* 개별 동의 항목들 */}
-            <div className="space-y-3">
-              <label className="flex items-start gap-3 cursor-pointer select-none">
+            <div className="space-y-3 pl-6">
+              <label className="flex items-center gap-3 cursor-pointer select-none min-h-[60px] pt-2">
                 <input
                   type="checkbox"
                   checked={checkboxes.personalDataCollection}
@@ -162,7 +162,7 @@ export default function BottomSheetConsent({
                 </span>
               </label>
 
-              <label className="flex items-start gap-3 cursor-pointer select-none">
+              <label className="flex items-center gap-3 cursor-pointer select-none min-h-[60px] pt-2">
                 <input
                   type="checkbox"
                   checked={checkboxes.personalDataThirdParty}
@@ -197,7 +197,7 @@ export default function BottomSheetConsent({
                 </span>
               </label>
 
-              <label className="flex items-start gap-3 cursor-pointer select-none">
+              <label className="flex items-center gap-3 cursor-pointer select-none min-h-[60px] pt-2">
                 <input
                   type="checkbox"
                   checked={checkboxes.personalDataCompany}
@@ -234,19 +234,23 @@ export default function BottomSheetConsent({
           </div>
 
           {/* 하단 버튼 */}
-          <div className="sticky bottom-0 bg-white border-t border-gray-200 px-4 py-4 pb-[calc(1rem+env(safe-area-inset-bottom))]">
-            <div className="max-w-[360px] md:max-w-full mx-auto">
-              <button
-                onClick={onConfirm}
-                disabled={!allChecked || isLoading}
-                className={`w-full h-12 rounded-xl font-bold text-[15px] transition-colors ${
-                  allChecked && !isLoading
-                    ? "bg-[#ff7a00] text-white hover:bg-[#ff8c1a] active:scale-[0.98]"
-                    : "bg-gray-200 text-gray-400 cursor-not-allowed"
-                }`}
-              >
-                {isLoading ? "처리 중…" : "동의하고 신청 완료하기"}
-              </button>
+          <div className="sticky bottom-0 bg-white border-t border-black/10" 
+            style={{ paddingBottom: "env(safe-area-inset-bottom)" }}
+          >
+            <div className="px-4 py-3">
+              <div className="max-w-[640px] mx-auto">
+                <button
+                  onClick={onConfirm}
+                  disabled={!allChecked || isLoading}
+                  className={`w-full h-14 flex items-center justify-center rounded-[12px] font-bold text-base transition-colors ${
+                    allChecked && !isLoading
+                      ? "bg-[#ff7a00] text-white hover:bg-[#ff8c1a] active:scale-[0.98]"
+                      : "bg-gray-200 text-gray-400 cursor-not-allowed"
+                  }`}
+                >
+                  {isLoading ? "처리 중…" : "동의하고 신청 완료하기"}
+                </button>
+              </div>
             </div>
           </div>
         </div>

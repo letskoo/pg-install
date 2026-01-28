@@ -320,19 +320,23 @@ export default function LeadFlow({ isOpen, onClose }: LeadFlowProps) {
       </div>
 
         {/* 하단 버튼 - 진짜 fixed로 고정 */}
-        <div className="fixed bottom-0 left-0 right-0 z-40">
-          <div className="max-w-[640px] mx-auto bg-white border-t border-gray-200 px-4 py-4 pb-[calc(1rem+env(safe-area-inset-bottom))]">
-            <button
-              onClick={handleSubmitClick}
-              disabled={!isStep2Valid}
-              className={`w-full h-12 rounded-xl font-bold text-[15px] transition-colors ${
-                isStep2Valid
-                  ? "bg-[#ff7a00] text-white hover:bg-[#ff8c1a] active:scale-[0.98] cursor-pointer"
-                  : "bg-gray-200 text-gray-400 cursor-not-allowed"
-              }`}
-            >
-              신청 완료하기
-            </button>
+        <div className="fixed bottom-0 left-0 right-0 z-40 bg-white border-t border-black/10"
+          style={{ paddingBottom: "env(safe-area-inset-bottom)" }}
+        >
+          <div className="px-4 py-3">
+            <div className="max-w-[640px] mx-auto">
+              <button
+                onClick={handleSubmitClick}
+                disabled={!isStep2Valid}
+                className={`w-full h-14 flex items-center justify-center rounded-[12px] font-bold text-base transition-colors ${
+                  isStep2Valid
+                    ? "bg-[#ff7a00] text-white hover:bg-[#ff8c1a] active:scale-[0.98] cursor-pointer"
+                    : "bg-gray-200 text-gray-400 cursor-not-allowed"
+                }`}
+              >
+                신청 완료하기
+              </button>
+            </div>
           </div>
         </div>
 

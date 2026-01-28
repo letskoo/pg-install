@@ -44,8 +44,8 @@ export default function HeroContent() {
     : "전국 가맹점이 신청 중입니다";
 
   return (
-    <div className="px-4 pt-2 pb-5">
-      <div className="max-w-[640px] mx-auto">
+    <div className="pt-2 pb-5">
+      <div>
       <h1 className="text-[22px] font-bold text-gray-900 mb-2 leading-snug md:text-2xl md:mb-3">
         MZ감성카페 바나타이거 창업 시작하세요!
       </h1>

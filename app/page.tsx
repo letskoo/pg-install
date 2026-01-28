@@ -10,12 +10,16 @@ export default function Page() {
   return (
     <main className="min-h-screen bg-white pb-12">
       <div id="hero-sentinel" className="absolute top-0 left-0 w-full h-px pointer-events-none" />
-      <StickyTopBar />
+      <StickyTopBar maxWidthClass="max-w-[640px]" />
       <HeroSlider />
-      <BrandHeader />
-      <HeroContent />
-      <BenefitList />
-      <InfoCard />
+      <div className="px-4">
+        <div className="max-w-[640px] mx-auto w-full">
+          <BrandHeader />
+          <HeroContent />
+          <BenefitList />
+          <InfoCard />
+        </div>
+      </div>
       <BottomCTA />
     </main>
   );
