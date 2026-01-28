@@ -25,6 +25,9 @@ export default function HeroSlider() {
   const widthRef = useRef(1);
   const modalStartXRef = useRef(0);
 
+  // ✅ iOS 메인 슬라이더 touch 이벤트 직접 바인딩용
+  const isTouchDraggingRef = useRef(false);
+
   const total = slides.length;
   const renderSlides = [slides[total - 1], ...slides, slides[0]];
 
@@ -75,6 +78,10 @@ export default function HeroSlider() {
 
   const handlePointerDown = (event: React.PointerEvent<HTMLDivElement>) => {
     if (isAnimating) return;
+
+    // iOS에서 기본 제스처로 포인터가 끊기는 것 방지
+    event.preventDefault();
+
     setIsDragging(true);
     startXRef.current = event.clientX;
     setDragOffset(0);
@@ -83,6 +90,9 @@ export default function HeroSlider() {
 
   const handlePointerMove = (event: React.PointerEvent<HTMLDivElement>) => {
     if (!isDragging) return;
+
+    event.preventDefault();
+
     setDragOffset(event.clientX - startXRef.current);
   };
 
@@ -106,6 +116,74 @@ export default function HeroSlider() {
       finishDrag(0);
     }
   };
+
+  // ✅ 핵심: iOS에서 확실히 먹는 "passive:false" 터치 바인딩
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el) return;
+
+    const onTouchStart = (e: TouchEvent) => {
+      if (isAnimating) return;
+      if (!e.touches || e.touches.length === 0) return;
+
+      isTouchDraggingRef.current = true;
+      setIsDragging(true);
+      startXRef.current = e.touches[0].clientX;
+      setDragOffset(0);
+    };
+
+    const onTouchMove = (e: TouchEvent) => {
+      if (!isTouchDraggingRef.current) return;
+      if (!e.touches || e.touches.length === 0) return;
+
+      // ✅ 이게 iOS에서 스와이프를 브라우저에 뺏기지 않게 해줌
+      e.preventDefault();
+
+      const x = e.touches[0].clientX;
+      setDragOffset(x - startXRef.current);
+    };
+
+    const onTouchEnd = (e: TouchEvent) => {
+      if (!isTouchDraggingRef.current) return;
+
+      isTouchDraggingRef.current = false;
+
+      const touch = (e.changedTouches && e.changedTouches[0]) || null;
+      if (!touch) {
+        finishDrag(0);
+        return;
+      }
+
+      const delta = touch.clientX - startXRef.current;
+      const threshold = widthRef.current * DRAG_THRESHOLD_RATIO;
+
+      if (Math.abs(delta) >= threshold) {
+        finishDrag(delta > 0 ? -1 : 1);
+      } else {
+        finishDrag(0);
+      }
+    };
+
+    const onTouchCancel = () => {
+      if (isTouchDraggingRef.current) {
+        isTouchDraggingRef.current = false;
+        finishDrag(0);
+      }
+    };
+
+    // ✅ 중요: passive:false
+    el.addEventListener("touchstart", onTouchStart, { passive: true });
+    el.addEventListener("touchmove", onTouchMove, { passive: false });
+    el.addEventListener("touchend", onTouchEnd, { passive: true });
+    el.addEventListener("touchcancel", onTouchCancel, { passive: true });
+
+    return () => {
+      el.removeEventListener("touchstart", onTouchStart as any);
+      el.removeEventListener("touchmove", onTouchMove as any);
+      el.removeEventListener("touchend", onTouchEnd as any);
+      el.removeEventListener("touchcancel", onTouchCancel as any);
+    };
+  }, [isAnimating]);
 
   const handleImageClick = () => {
     if (!isDragging) {
@@ -173,53 +251,60 @@ export default function HeroSlider() {
   return (
     <div className="relative w-full overflow-hidden">
       <div className="max-w-[640px] mx-auto">
-      <div
-        ref={containerRef}
-        className="relative w-full overflow-hidden aspect-square"
-        style={{ touchAction: "pan-y", width: "100%" }}
-        onPointerDown={handlePointerDown}
-        onPointerMove={handlePointerMove}
-        onPointerUp={handlePointerEnd}
-        onPointerLeave={handlePointerCancel}
-        onPointerCancel={handlePointerCancel}
-        onClick={handleImageClick}
-      >
-        {renderSlides.map((slide, slideIndex) => {
-          const position = (slideIndex - index) * 100 + percentOffset;
-          const transition = isDragging || !isAnimating
-            ? "none"
-            : `transform ${TRANSITION_MS}ms cubic-bezier(0.2, 0.8, 0.2, 1)`;
+        <div
+          ref={containerRef}
+          className="relative w-full overflow-hidden aspect-square"
+          style={{
+            touchAction: "pan-y",
+            width: "100%",
+            WebkitUserSelect: "none",
+            userSelect: "none",
+            WebkitTouchCallout: "none",
+          }}
+          onPointerDown={handlePointerDown}
+          onPointerMove={handlePointerMove}
+          onPointerUp={handlePointerEnd}
+          onPointerLeave={handlePointerCancel}
+          onPointerCancel={handlePointerCancel}
+          onClick={handleImageClick}
+        >
+          {renderSlides.map((slide, slideIndex) => {
+            const position = (slideIndex - index) * 100 + percentOffset;
+            const transition =
+              isDragging || !isAnimating
+                ? "none"
+                : `transform ${TRANSITION_MS}ms cubic-bezier(0.2, 0.8, 0.2, 1)`;
 
-          return (
-            <div
-              key={`${slide.src}-${slideIndex}`}
-              className="absolute inset-0"
-              style={{
-                transform: `translateX(${position}%)`,
-                transition,
-              }}
-            >
-              <Image
-                src={slide.src}
-                alt={slide.alt}
-                fill
-                priority={slideIndex === 1}
-                sizes="100vw"
-                className="select-none object-cover"
-                draggable={false}
-              />
-            </div>
-          );
-        })}
+            return (
+              <div
+                key={`${slide.src}-${slideIndex}`}
+                className="absolute inset-0"
+                style={{
+                  transform: `translateX(${position}%)`,
+                  transition,
+                }}
+              >
+                <Image
+                  src={slide.src}
+                  alt={slide.alt}
+                  fill
+                  priority={slideIndex === 1}
+                  sizes="100vw"
+                  className="select-none object-cover"
+                  draggable={false}
+                />
+              </div>
+            );
+          })}
 
-        <div className="pointer-events-none absolute bottom-3 right-3 rounded-full bg-black/55 px-3 py-1 text-xs font-semibold text-white backdrop-blur">
-          {displayIndex} / {slides.length}
+          <div className="pointer-events-none absolute bottom-3 right-3 rounded-full bg-black/55 px-3 py-1 text-xs font-semibold text-white backdrop-blur">
+            {displayIndex} / {slides.length}
+          </div>
         </div>
-      </div>
       </div>
 
       {showModal && (
-        <div 
+        <div
           className="fixed inset-0 z-[9999] bg-black/60 backdrop-blur-sm flex items-center justify-center overflow-hidden"
           onClick={() => setShowModal(false)}
         >
@@ -246,7 +331,7 @@ export default function HeroSlider() {
             </svg>
           </button>
 
-          <div 
+          <div
             className="relative flex items-center justify-center overflow-hidden"
             onClick={(e) => e.stopPropagation()}
             onTouchStart={handleModalTouchStart}
