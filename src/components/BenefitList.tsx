@@ -2,28 +2,23 @@ export default function BenefitList() {
   const benefits = [
     {
       number: 1,
-      title: "렌탈 실비 20만원 (4H)",
-      description: "선입금 금지, 행사 종료 후 정산",
+      title: "네컷사진 프로그램",
+      description: "새 제품 / 중고 제품, 지역 관계없이 설치 가능",
     },
     {
       number: 2,
-      title: "운송비 등 추가비용 X",
-      description: "인화지 500장 지원, 전문 인력 현장 배치",
+      title: "사진 프레임",
+      description: "내가 생각한 나만의 프레임으로 구성 가능",
     },
     {
       number: 3,
-      title: "원하는 문구로 사진 출력",
-      description: "사진 프레임에 원하는 로고, 문구 추가 가능",
+      title: "브랜드 창업",
+      description: "개인 브랜드, 가맹사업, 렌탈사업 창업 가능",
     },
     {
       number: 4,
-      title: "AI 보정 기능",
-      description: "인물 포토샵, 라이트룸 필터 제공",
-    },
-    {
-      number: 5,
-      title: "결혼식 뿐 아니라 어디든 렌탈 대상",
-      description: "돌잔치, 학교/유치원, 대학교 축제, 스포츠경기 또는 기업행사",
+      title: "샵인샵 프로모션",
+      description: "좋은 자리, 놀리기 아쉬운 매장 있으신 분과 협업 가능",
     },
   ];
 

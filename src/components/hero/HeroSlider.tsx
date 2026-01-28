@@ -5,9 +5,6 @@ import { useEffect, useRef, useState } from "react";
 
 const slides = [
   { src: "/images/hero/001.jpg", alt: "커피 음료와 케이크" },
-  { src: "/images/hero/002.jpg", alt: "커피 음료와 케이크" },
-  { src: "/images/hero/003.jpg", alt: "커피 음료와 케이크" },
-  { src: "/images/hero/004.jpg", alt: "커피 음료와 케이크" },
 ];
 
 const TRANSITION_MS = 380;
@@ -255,17 +252,11 @@ export default function HeroSlider() {
           ref={containerRef}
           className="relative w-full overflow-hidden aspect-square"
           style={{
-            touchAction: "pan-y",
             width: "100%",
             WebkitUserSelect: "none",
             userSelect: "none",
             WebkitTouchCallout: "none",
           }}
-          onPointerDown={handlePointerDown}
-          onPointerMove={handlePointerMove}
-          onPointerUp={handlePointerEnd}
-          onPointerLeave={handlePointerCancel}
-          onPointerCancel={handlePointerCancel}
           onClick={handleImageClick}
         >
           {renderSlides.map((slide, slideIndex) => {
@@ -296,10 +287,6 @@ export default function HeroSlider() {
               </div>
             );
           })}
-
-          <div className="pointer-events-none absolute bottom-3 right-3 rounded-full bg-black/55 px-3 py-1 text-xs font-semibold text-white backdrop-blur">
-            {displayIndex} / {slides.length}
-          </div>
         </div>
       </div>
 
@@ -334,69 +321,14 @@ export default function HeroSlider() {
           <div
             className="relative flex items-center justify-center overflow-hidden"
             onClick={(e) => e.stopPropagation()}
-            onTouchStart={handleModalTouchStart}
-            onTouchEnd={handleModalTouchEnd}
             style={{ maxWidth: "100vw", maxHeight: "100vh" }}
           >
-            {/* 좌 버튼 */}
-            <button
-              onClick={(e) => {
-                e.stopPropagation();
-                handleModalPrev();
-              }}
-              className="absolute left-4 top-1/2 -translate-y-1/2 z-[10001] flex items-center justify-center w-12 h-12 bg-black/45 rounded-full hover:bg-black/60 active:bg-black/70 transition-colors shadow-lg"
-              aria-label="이전"
-            >
-              <svg
-                className="w-7 h-7 text-white"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M15 19l-7-7 7-7"
-                />
-              </svg>
-            </button>
-
             {/* 이미지 */}
             <img
               src={slides[modalIndex - 1].src}
               alt={slides[modalIndex - 1].alt}
               style={{ maxWidth: "100vw", maxHeight: "100vh", objectFit: "contain" }}
             />
-
-            {/* 우 버튼 */}
-            <button
-              onClick={(e) => {
-                e.stopPropagation();
-                handleModalNext();
-              }}
-              className="absolute right-4 top-1/2 -translate-y-1/2 z-[10001] flex items-center justify-center w-12 h-12 bg-black/45 rounded-full hover:bg-black/60 active:bg-black/70 transition-colors shadow-lg"
-              aria-label="다음"
-            >
-              <svg
-                className="w-7 h-7 text-white"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M9 5l7 7-7 7"
-                />
-              </svg>
-            </button>
-
-            {/* 인디케이터 */}
-            <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 rounded-full bg-black/55 px-3 py-1 text-xs font-semibold text-white backdrop-blur">
-              {modalIndex} / {slides.length}
-            </div>
           </div>
         </div>
       )}

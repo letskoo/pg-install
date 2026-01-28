@@ -22,7 +22,7 @@ export default function FixedCtaButton() {
             onClick={handleClick}
             className="w-full h-14 flex items-center justify-center rounded-[12px] bg-[#ff7a00] text-base font-bold text-white hover:bg-[#ff8c1a] transition-colors active:scale-[0.98]"
           >
-            렌탈 신청하기
+            신청하기
           </button>
         </div>
       </div>

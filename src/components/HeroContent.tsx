@@ -47,10 +47,10 @@ export default function HeroContent() {
     <div className="pt-2 pb-5">
       <div>
       <h1 className="text-[22px] font-bold text-gray-900 mb-2 leading-snug md:text-2xl md:mb-3">
-        포토부스 체험단 모집
+        네컷사진 프로그램 설치/창업
       </h1>
       <p className="text-[14px] text-gray-600 mb-1 leading-relaxed md:text-base md:mb-1.5">
-        뜨거운 반응, 네컷사진 포토부스 실비렌탈
+        내 이름으로 된 네컷사진 창업 가능
       </p>
       <div className="flex items-center gap-1 text-[#ff7a00] text-[13px] md:text-sm">
         <svg className="w-4 h-4 md:w-4 md:h-4" fill="currentColor" viewBox="0 0 24 24">

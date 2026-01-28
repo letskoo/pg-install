@@ -48,7 +48,7 @@ export async function appendLeadToSheet(
     });
 
     const spreadsheetId = process.env.GOOGLE_SHEET_ID;
-    const sheetName = process.env.GOOGLE_SHEET_NAME || "시트1";
+    const sheetName = process.env.GOOGLE_SHEET_NAME || "pg-install";
     const range = `${sheetName}!A:G`;
 
     if (!spreadsheetId) {

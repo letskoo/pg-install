@@ -3,8 +3,5 @@
 // Run: npm run gen:hero
 
 export const heroImages: string[] = [
-  "/images/hero/001.jpg",
-  "/images/hero/002.jpg",
-  "/images/hero/003.jpg",
-  "/images/hero/004.jpg"
+  "/images/hero/001.jpg"
 ];
