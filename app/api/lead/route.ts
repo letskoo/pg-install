@@ -78,9 +78,20 @@ export async function POST(req: Request) {
     const sheetId = process.env.GOOGLE_SHEET_ID;
     const sheetName = process.env.GOOGLE_SHEET_TAB || "carrot";
 
+    // 전화번호 포맷 안전장치: 숫자만 11자리면 010-xxxx-xxxx 형식으로 변환
+    let formattedPhone = phone;
+    if (/^\d{11}$/.test(phone)) {
+      // 숫자만 11자리인 경우
+      formattedPhone = `${phone.slice(0, 3)}-${phone.slice(3, 7)}-${phone.slice(7, 11)}`;
+      console.log("[API/POST] Phone formatted from", phone, "to", formattedPhone);
+    } else if (!/^010-\d{4}-\d{4}$/.test(phone)) {
+      // 하이픈 형식도 아니면 경고 로그
+      console.warn("[API/POST] Phone format unexpected:", phone);
+    }
+
     const payload = {
       name,
-      phone,
+      phone: formattedPhone,
       region: region || "",
       message: message || memo || "",
       createdAt: new Date().toISOString(),

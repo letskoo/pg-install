@@ -83,7 +83,29 @@ export default function LeadFlow({ isOpen, onClose }: LeadFlowProps) {
   const handleFormChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
       const { name, value } = e.target;
-      setFormData((prev) => ({ ...prev, [name]: value }));
+      
+      // 전화번호 자동 포맷팅
+      if (name === "phone") {
+        // 숫자만 추출
+        const numbers = value.replace(/[^0-9]/g, "");
+        
+        // 11자리 숫자인 경우 010-xxxx-xxxx 형식으로 변환
+        let formatted = numbers;
+        if (numbers.length <= 3) {
+          formatted = numbers;
+        } else if (numbers.length <= 7) {
+          formatted = `${numbers.slice(0, 3)}-${numbers.slice(3)}`;
+        } else if (numbers.length <= 11) {
+          formatted = `${numbers.slice(0, 3)}-${numbers.slice(3, 7)}-${numbers.slice(7, 11)}`;
+        } else {
+          // 11자리 초과 시 잘라내기
+          formatted = `${numbers.slice(0, 3)}-${numbers.slice(3, 7)}-${numbers.slice(7, 11)}`;
+        }
+        
+        setFormData((prev) => ({ ...prev, [name]: formatted }));
+      } else {
+        setFormData((prev) => ({ ...prev, [name]: value }));
+      }
     },
     []
   );
@@ -105,8 +127,16 @@ export default function LeadFlow({ isOpen, onClose }: LeadFlowProps) {
       setErrorMessage("이름과 연락처는 필수 입력입니다.");
       return;
     }
+    
+    // 전화번호 형식 검증 (010-xxxx-xxxx)
+    const phonePattern = /^010-\d{4}-\d{4}$/;
+    if (!phonePattern.test(formData.phone)) {
+      setErrorMessage("연락처는 010-0000-0000 형식으로 입력해주세요.");
+      return;
+    }
+    
     setIsConsentOpen(true);
-  }, [isStep2Valid]);
+  }, [isStep2Valid, formData.phone]);
 
   const handleConsentCheckboxChange = useCallback(
     (key: keyof ConsentCheckboxes, value: boolean) => {
@@ -273,9 +303,10 @@ export default function LeadFlow({ isOpen, onClose }: LeadFlowProps) {
             <input
               type="tel"
               name="phone"
-              placeholder="예: 010-1234-5678"
+              placeholder="010-0000-0000"
               value={formData.phone}
               onChange={handleFormChange}
+              maxLength={13}
               className="w-full h-12 px-4 rounded-lg border border-gray-300 text-[15px] placeholder:text-gray-400 focus:outline-none focus:border-[#ff7a00] focus:ring-1 focus:ring-[#ff7a00] transition-colors"
             />
           </div>
