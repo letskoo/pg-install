@@ -23,7 +23,7 @@ export default function InfoCard() {
         <div className="grid gap-y-2.5 gap-x-3" style={{ gridTemplateColumns: '70px 1fr' }}>
           {/* Row 1: 신청항목 */}
           <span className="text-[12px] text-gray-500 lg:text-sm">신청항목</span>
-          <span className="text-[13px] font-semibold text-gray-900 lg:text-base">포토부스 렌탈</span>
+          <span className="text-[13px] font-semibold text-gray-900 lg:text-base">프로그램 설치</span>
 
           {/* Row 2: 상호명 */}
           <span className="text-[12px] text-gray-500 lg:text-sm">상호명</span>

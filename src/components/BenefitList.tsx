@@ -2,22 +2,22 @@ export default function BenefitList() {
   const benefits = [
     {
       number: 1,
-      title: "네컷사진 프로그램",
+      title: "어떤 부스든 프로그램 설치 가능",
       description: "새 제품 / 중고 제품, 지역 관계없이 설치 가능",
     },
     {
       number: 2,
-      title: "사진 프레임",
+      title: "사진 프레임 추가 가능",
       description: "내가 생각한 나만의 프레임으로 구성 가능",
     },
     {
       number: 3,
-      title: "브랜드 창업",
+      title: "독자 브랜드 창업 가능",
       description: "개인 브랜드, 가맹사업, 렌탈사업 창업 가능",
     },
     {
       number: 4,
-      title: "샵인샵 프로모션",
+      title: "샵인샵 프로모션, 연락 주세요!",
       description: "좋은 자리, 놀리기 아쉬운 매장 있으신 분과 협업 가능",
     },
   ];
