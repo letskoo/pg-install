@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from "react";
 import styles from "./ConsentSheet.module.css";
 import { FormDataType, ConsentCheckboxes } from "./types";
+import ConsentDetailModal from "./ConsentDetailModal";
 
 interface BottomSheetConsentProps {
   isOpen: boolean;
@@ -23,6 +24,7 @@ export default function BottomSheetConsent({
 }: BottomSheetConsentProps) {
   const [isMounted, setIsMounted] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
+  const [detailModal, setDetailModal] = useState<"personalDataCollection" | "personalDataThirdParty" | "personalDataCompany" | null>(null);
 
   // 애니메이션 시간(ms)
   const transitionDuration = 300;
@@ -94,11 +96,11 @@ export default function BottomSheetConsent({
           </div>
 
           {/* 콘텐츠 */}
-          <div className="px-4 py-4 space-y-4">
+          <div className="py-4 space-y-4">
             <div className="max-w-[640px] mx-auto">
             {/* 모두 동의 */}
-            <div className="border-b border-gray-200 pb-4 pl-6">
-              <label className="flex items-center gap-3 cursor-pointer select-none">
+            <div className="pb-4 px-4 border-b border-gray-200">
+              <label className="flex items-center gap-3 cursor-pointer select-none pl-6">
                 <input
                   type="checkbox"
                   checked={allChecked}
@@ -128,8 +130,8 @@ export default function BottomSheetConsent({
             </div>
 
             {/* 개별 동의 항목들 */}
-            <div className="space-y-3 pl-6">
-              <label className="flex items-center gap-3 cursor-pointer select-none min-h-[60px] pt-2">
+            <div className="space-y-3 px-4">
+              <label className="flex items-center gap-3 cursor-pointer select-none min-h-[60px] pt-2 pl-6">
                 <input
                   type="checkbox"
                   checked={checkboxes.personalDataCollection}
@@ -154,15 +156,21 @@ export default function BottomSheetConsent({
                     <path d="M5 13l4 4L19 7" />
                   </svg>
                 </span>
-                <span className="text-[14px] text-gray-700 leading-relaxed">
-                  <span className="font-semibold">(필수)</span> 개인정보 수집 및
-                  이용 동의
-                  <br />
-                  <span className="text-[12px] text-gray-500">(확인 연락에 사용됩니다. 마케팅에 사용되지 않습니다)</span>
-                </span>
+                <button
+                  type="button"
+                  onClick={() => setDetailModal("personalDataCollection")}
+                  className="text-left flex-1 hover:opacity-70 transition-opacity"
+                >
+                  <span className="text-[14px] text-gray-700 leading-relaxed block">
+                    <span className="font-semibold">(필수)</span> 개인정보 수집 및
+                    이용 동의
+                    <br />
+                    <span className="text-[12px] text-gray-500">(상담 안내를 위해 사용됩니다. 마케팅에 사용되지 않습니다)</span>
+                  </span>
+                </button>
               </label>
 
-              <label className="flex items-center gap-3 cursor-pointer select-none min-h-[60px] pt-2">
+              <label className="flex items-center gap-3 cursor-pointer select-none min-h-[60px] pt-2 pl-6">
                 <input
                   type="checkbox"
                   checked={checkboxes.personalDataThirdParty}
@@ -187,16 +195,22 @@ export default function BottomSheetConsent({
                     <path d="M5 13l4 4L19 7" />
                   </svg>
                 </span>
-                <span className="text-[14px] text-gray-700 leading-relaxed">
-                  <span className="font-semibold">(필수)</span> 개인정보 보관하지 않습니다
-                  <br />
-                  <span className="text-[12px] text-gray-500">
-                    (연락 후 즉시 폐기하며, 제 3자에게 제공하지 않습니다)
+                <button
+                  type="button"
+                  onClick={() => setDetailModal("personalDataThirdParty")}
+                  className="text-left flex-1 hover:opacity-70 transition-opacity"
+                >
+                  <span className="text-[14px] text-gray-700 leading-relaxed block">
+                    <span className="font-semibold">(필수)</span> 개인정보 제3자 제공 없음 확인
+                    <br />
+                    <span className="text-[12px] text-gray-500">
+                      (수집된 개인정보는 제3자에게 제공하지 않습니다)
+                    </span>
                   </span>
-                </span>
+                </button>
               </label>
 
-              <label className="flex items-center gap-3 cursor-pointer select-none min-h-[60px] pt-2">
+              <label className="flex items-center gap-3 cursor-pointer select-none min-h-[60px] pt-2 pl-6">
                 <input
                   type="checkbox"
                   checked={checkboxes.personalDataCompany}
@@ -219,13 +233,19 @@ export default function BottomSheetConsent({
                     <path d="M5 13l4 4L19 7" />
                   </svg>
                 </span>
-                <span className="text-[14px] text-gray-700 leading-relaxed">
-                  <span className="font-semibold">(필수)</span> 개인정보법 준수 동의
-                  <br />
-                  <span className="text-[12px] text-gray-500">
-                    (표기된 사항 외 규정은 개인정보법에 따릅니다)
+                <button
+                  type="button"
+                  onClick={() => setDetailModal("personalDataCompany")}
+                  className="text-left flex-1 hover:opacity-70 transition-opacity"
+                >
+                  <span className="text-[14px] text-gray-700 leading-relaxed block">
+                    <span className="font-semibold">(필수)</span> 개인정보 처리방침 확인
+                    <br />
+                    <span className="text-[12px] text-gray-500">
+                      (개인정보 처리방침을 확인하였습니다)
+                    </span>
                   </span>
-                </span>
+                </button>
               </label>
             </div>
             </div>
@@ -253,6 +273,14 @@ export default function BottomSheetConsent({
           </div>
         </div>
       </div>
+
+      {/* 상세 화면 모달 */}
+      <ConsentDetailModal
+        key={detailModal}
+        isOpen={detailModal !== null}
+        onClose={() => setDetailModal(null)}
+        detailType={detailModal}
+      />
     </>
   );
 }
